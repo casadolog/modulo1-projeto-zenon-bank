@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'br.com.casadolog'
+group = 'br.com.zenon'
 version = '1.0-SNAPSHOT'
 
 repositories {
