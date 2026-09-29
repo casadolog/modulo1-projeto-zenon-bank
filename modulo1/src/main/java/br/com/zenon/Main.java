@@ -1,14 +1,16 @@
 package br.com.zenon;
 
+import java.util.List;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws Exception{
-        DataBase dataBase = new DataBase();
-    //    dataBase.getTransationByPosicao(1);
+        TransactionIngestor transactionIngestor = new TransactionIngestor("dados.csv");
 
+        List<Transaction> lista = transactionIngestor.getLista();
 
-        System.out.println(dataBase.getTransationByPosicao(1));
-        System.out.println(dataBase.getTransationByPosicao(3));
+        for(int i = 0; i < 10; i++)
+            System.out.println(lista.get(i));
     }
 }

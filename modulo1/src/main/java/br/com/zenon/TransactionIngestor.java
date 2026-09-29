@@ -4,19 +4,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.nio.file.Paths;
-import java.util.Scanner;
+import java.util.*;
 
-public class DataBase {
+public class TransactionIngestor {
 
-    private File arquivo;
+    private final File arquivo;
+    private List<Transaction> lista;
 
-    public DataBase()
-    {
-        arquivo = getFile();
+    public TransactionIngestor(String nome_arquivo) throws FileNotFoundException {
+        arquivo = getFile(nome_arquivo);
+        carregarLinhas(1000);
     }
-    private static File getFile()
+    private static File getFile(String nome_arquivo)
     {
-        return new File(Paths.get("data/dados.csv").toUri());
+        return new File(Paths.get("data/"+nome_arquivo).toUri());
     }
     private Transaction linhaToTransactiton(String linha)
     {
@@ -38,8 +39,22 @@ public class DataBase {
             newbalanceOrig, nameDest, oldbalanceDest, newbalanceDest,
         isFraud, isFlaggedFraud);
     }
+    private void carregarLinhas(int numero_linhas) throws FileNotFoundException {
+        lista = new ArrayList<>();
+        try(Scanner scanner = new Scanner(arquivo))
+        {
+            int cont = 0;
+            while (scanner.hasNext() && cont < numero_linhas) {
+                if(cont == 0)
+                    scanner.next();
+                String linha = scanner.next();
+                lista.add(linhaToTransactiton(linha));
+                cont++;
+            }
+        }
+    }
     public Transaction getTransationByPosicao(int posicao) throws Exception {
-        try(Scanner scanner = new Scanner(getFile()))
+        try(Scanner scanner = new Scanner(arquivo))
         {
             int cont = 0;
             while (scanner.hasNext()) {
@@ -51,5 +66,9 @@ public class DataBase {
             }
         }
         throw new Exception("Linha não concontrada");
+    }
+
+    public List<Transaction> getLista() {
+        return lista;
     }
 }
