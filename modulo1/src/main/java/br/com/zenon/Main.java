@@ -6,7 +6,7 @@ import java.util.List;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws Exception{
-        TransactionIngestor transactionIngestor = new TransactionIngestor("dados.csv");
+        TransactionIngestor transactionIngestor = new TransactionIngestor("paysim_with_bad_data.csv");
 
         List<Transaction> lista = transactionIngestor.getLista();
 

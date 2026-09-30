@@ -5,9 +5,11 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class TransactionIngestor {
 
+    private static Logger logger = Logger.getLogger(TransactionIngestor.class.toString());
     private final File arquivo;
     private List<Transaction> lista;
 
@@ -34,6 +36,16 @@ public class TransactionIngestor {
         BigDecimal	newbalanceDest = new BigDecimal(dados[8]);
         boolean isFraud = dados[9].equals("1");
         boolean isFlaggedFraud = dados[10].equals("1");
+
+        if(step < 1)
+            throw new IllegalArgumentException("step com valor negativo "+step);
+
+        if(nameOrig.isEmpty())
+            throw new IllegalArgumentException("nome de origem não pode ser vazio ");
+
+        if(nameDest.isEmpty())
+            throw new IllegalArgumentException("nome destino não pode ser vazio");
+
         
         return new Transaction(step,type, amount, nameOrig, oldbalanceOrg,
             newbalanceOrig, nameDest, oldbalanceDest, newbalanceDest,
@@ -48,7 +60,14 @@ public class TransactionIngestor {
                 if(cont == 0)
                     scanner.next();
                 String linha = scanner.next();
-                lista.add(linhaToTransactiton(linha));
+                try {
+                    lista.add(linhaToTransactiton(linha));
+                }
+                catch (Exception e)
+                {
+                    logger.warning("Erro: "+e.getMessage());
+                }
+
                 cont++;
             }
         }
