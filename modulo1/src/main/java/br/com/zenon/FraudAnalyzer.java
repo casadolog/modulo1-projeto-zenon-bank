@@ -32,6 +32,19 @@ public class FraudAnalyzer {
                 .collect(Collectors.groupingBy(Transaction::nameOrig,Collectors.summingDouble(v -> v.amount().doubleValue())))
                 ;
     }
+    public Map<TransactionType,Long> totalPorTipo()
+    {
+        return lista.stream()
+                .filter(v -> { return v.isFraud();})
+                .collect(Collectors.groupingBy(Transaction::type,Collectors.counting()));
+    }
+    public Double valorTotalInfracao()
+    {
+        return lista.stream()
+                .filter(v -> {return v.isFraud();})
+                .mapToDouble(value -> {
+                    return value.amount().doubleValue();}).sum();
+    }
     public Map<String, Double> maioresInfratores(int numero_itens)
     {
         return totalPorInfrato()

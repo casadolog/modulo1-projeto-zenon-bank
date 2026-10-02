@@ -1,6 +1,7 @@
 package br.com.zenon;
 
 import java.util.List;
+import java.util.Map;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -17,6 +18,9 @@ public class Main {
         fraudAnalyzer.maioresFraudes(3).forEach(v -> System.out.println(v.amount().toPlainString()));
         System.out.println("Maiores Fraudadores");
         fraudAnalyzer.maioresInfratores(5).entrySet().stream().forEach(e -> System.out.println(e.getKey()));
+        System.out.println("Valor total das infrações: "+fraudAnalyzer.valorTotalInfracao());
+        System.out.println("fraudes por tipo");
+        fraudAnalyzer.totalPorTipo().entrySet().stream().forEach( e -> System.out.println(e.getKey()+": "+e.getValue()));
 
     }
 }
