@@ -13,9 +13,9 @@ public class TransactionIngestor {
     private final File arquivo;
     private List<Transaction> lista;
 
-    public TransactionIngestor(String nome_arquivo) throws FileNotFoundException {
+    public TransactionIngestor(String nome_arquivo, int numero_linha) throws FileNotFoundException {
         arquivo = getFile(nome_arquivo);
-        carregarLinhas(1000);
+        carregarLinhas(numero_linha);
     }
     private static File getFile(String nome_arquivo)
     {
@@ -60,6 +60,7 @@ public class TransactionIngestor {
                 if(cont == 0)
                     scanner.next();
                 String linha = scanner.next();
+                //System.out.println(linha);
                 try {
                     lista.add(linhaToTransactiton(linha));
                 }
