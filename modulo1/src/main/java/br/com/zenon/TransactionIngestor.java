@@ -2,10 +2,13 @@ package br.com.zenon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class TransactionIngestor {
 
@@ -51,8 +54,8 @@ public class TransactionIngestor {
             newbalanceOrig, nameDest, oldbalanceDest, newbalanceDest,
         isFraud, isFlaggedFraud);
     }
-    private void carregarLinhas(int numero_linhas) throws FileNotFoundException {
-        lista = new ArrayList<>();
+    private void carregarLinhas(int numero_linhas) {
+        /*lista = new ArrayList<>();
         try(Scanner scanner = new Scanner(arquivo))
         {
             int cont = 0;
@@ -71,6 +74,16 @@ public class TransactionIngestor {
 
                 cont++;
             }
+        }*/
+        try {
+            lista = Files.readAllLines(arquivo.toPath()).stream()
+                    .skip(1)
+                    .limit(numero_linhas)
+                    .map(this::linhaToTransactiton)
+                    .collect(Collectors.toCollection(ArrayList<Transaction>::new));
+        }catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
     }
     public Transaction getTransationByPosicao(int posicao) throws Exception {
