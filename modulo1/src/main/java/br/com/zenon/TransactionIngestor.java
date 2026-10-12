@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TransactionIngestor {
 
@@ -78,7 +79,7 @@ public class TransactionIngestor {
         try {
             lista = Files.readAllLines(arquivo.toPath()).stream()
                     .skip(1)
-                    .limit(numero_linhas)
+                    //.limit(numero_linhas)
                     .map(this::linhaToTransactiton)
                     .collect(Collectors.toCollection(ArrayList<Transaction>::new));
         }catch (Exception e)

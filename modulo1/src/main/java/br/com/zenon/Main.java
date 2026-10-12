@@ -8,7 +8,7 @@ import java.util.Optional;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws Exception{
-        TransactionIngestor transactionIngestor = new TransactionIngestor("dados.csv", 1000000); //paysim_with_bad_data.csv | dados.csv
+        TransactionIngestor transactionIngestor = new TransactionIngestor("dados.csv", 100000); //paysim_with_bad_data.csv | dados.csv
 
         List<Transaction> lista = transactionIngestor.getLista();
 
