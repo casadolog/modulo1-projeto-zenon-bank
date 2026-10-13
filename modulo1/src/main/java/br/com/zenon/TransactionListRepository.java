@@ -23,6 +23,6 @@ public class TransactionListRepository extends TransactionRespository {
         if(lista.isEmpty())
             return Optional.empty();
 
-        return Optional.of((Transaction) lista.getLast());
+        return Optional.of((Transaction) lista.get(lista.size()-1));
     }
 }
