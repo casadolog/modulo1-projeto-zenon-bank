@@ -25,7 +25,7 @@ public class TransactionIngestor {
     {
         return new File(Paths.get("data/"+nome_arquivo).toUri());
     }
-    private Transaction linhaToTransactiton(String linha)
+    public static Transaction linhaToTransactiton(String linha)
     {
         String[] dados = linha.split(",");
         
@@ -80,7 +80,7 @@ public class TransactionIngestor {
             lista = Files.readAllLines(arquivo.toPath()).stream()
                     .skip(1)
                     .limit(numero_linhas)
-                    .map(this::linhaToTransactiton)
+                    .map(TransactionIngestor::linhaToTransactiton)
                     .collect(Collectors.toCollection(ArrayList<Transaction>::new));
         }catch (Exception e)
         {

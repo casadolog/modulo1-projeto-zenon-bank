@@ -13,16 +13,16 @@ public class DBMain {
             transactionSQLRepository = new TransactionSQLRepository(transactionIngestor);
 
             tempo_inicio = System.nanoTime();
-            //transactionSQLRepository.salvarTodosRegistros();
+            transactionSQLRepository.salvarTodosRegistrosComBatched();
             System.out.println("Gastou "+(System.nanoTime() - tempo_inicio)+" para salvar");
-
+/*
             String clientes[] = {"C1231006815","C12345"};
             for(String cliente : clientes) {
                 Optional<Transaction> optionalTransaction = transactionSQLRepository.buscaByNomeCliente(cliente);
                 System.out.println(optionalTransaction.isEmpty() ? "Transação não encontrada para cliente " + cliente :optionalTransaction.get());
             }
             System.out.println("Demorou: "+(System.nanoTime() - tempo_inicio));
-
+*/
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
