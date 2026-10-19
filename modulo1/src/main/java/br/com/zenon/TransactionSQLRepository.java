@@ -1,15 +1,18 @@
 package br.com.zenon;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TransactionSQLRepository  extends TransactionRespository{
 
     private static Connection connection;
     private static int contador = 0;
     private static int quantidade_salva = 0;
+
+
 
     public TransactionSQLRepository(TransactionIngestor transactionIngestor) throws SQLException {
         super(transactionIngestor);
@@ -19,12 +22,8 @@ public class TransactionSQLRepository  extends TransactionRespository{
         String url = "jdbc:mysql://localhost:3306/transacoes?rewriteBatchedStatements=true";
         connection = DriverManager.getConnection(url,"root","Xulambs/9957");
     }
-    public static void salvaUmTransacao(Transaction transaction)
-    {
 
-    }
 
-    @Override
     public Optional<Transaction> buscaUltimaByNomeCliente(String nome) {
         return Optional.empty();
     }
@@ -118,16 +117,18 @@ public class TransactionSQLRepository  extends TransactionRespository{
                 preparedStatement.addBatch();
                 cont++;
                 if ((cont % TAMANHO_LOTE) == 0) {
-                    System.out.println("x");
                     preparedStatement.executeBatch();
                     preparedStatement.clearBatch();
+
+
                 }
 
 
             }
             preparedStatement.executeBatch();
             quantidade_salva += list.size();
-            System.out.print(quantidade_salva+" ");
+            System.out.print("\n"+quantidade_salva);
+            //executorService.shutdown();
         }
         catch (Exception e)
         {
